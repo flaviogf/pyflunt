@@ -27,6 +27,8 @@ class Notifiable(ABC):
     def notifications(self):
         return tuple(self._notifications)
 
-    def add_notification(self, field, message):
-        notification = Notification(field, message)
+    def add_notification(self, notification):
         self._notifications.append(notification)
+
+    def add_notifications(self, *notifications):
+        self._notifications += notifications
