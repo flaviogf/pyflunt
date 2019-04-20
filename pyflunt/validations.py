@@ -1,6 +1,8 @@
 from datetime import datetime
+from decimal import Decimal
+from typing import Union
 
-from pyflunt.notifications import Notifiable, Notification
+from pyflunt.notifications import Notification
 
 
 class BoolValidationContractMixin:
@@ -25,7 +27,16 @@ class DateTimeValidationContractMixin:
         return self
 
 
-class Contract(BoolValidationContractMixin, DateTimeValidationContractMixin,
-               Notifiable):
-    def requires(self) -> '__class__':
+class NumberValidationContractMixin:
+    def is_greater_than(self, value: 'Union[int, float, complex, Decimal]',
+                        comparer: 'Union[int, float, complex, Decimal]',
+                        field: 'str', message: 'str') -> '__class__':
+        if value < comparer:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
+class RequiresMixin:
+    def requires(self):
         return self
