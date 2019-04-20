@@ -12,6 +12,15 @@ class BoolValidationContractMixin:
         return self.is_false(not value, field, message)
 
 
-class Contract(BoolValidationContractMixin, Notifiable):
+class DateTimeValidationContractMixin:
+    def is_greater_than(self, value, comparer, field, message):
+        if value < comparer:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
+class Contract(BoolValidationContractMixin, DateTimeValidationContractMixin,
+               Notifiable):
     def requires(self):
         return self
