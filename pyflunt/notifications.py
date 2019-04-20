@@ -2,16 +2,16 @@ from abc import ABC
 
 
 class Notification:
-    def __init__(self, field, message):
+    def __init__(self, field: 'str', message: 'str'):
         self._field = field
         self._message = message
 
     @property
-    def field(self):
+    def field(self) -> 'str':
         return self._field
 
     @property
-    def message(self):
+    def message(self) -> 'str':
         return self._message
 
 
