@@ -48,7 +48,7 @@ class DateTimeContractValidationTests(unittest.TestCase):
 
         self.assertFalse(contract.is_valid)
 
-    def test_should_is_valid_ture_when_is_greater_than_is_called_with_value_greater_than_comparer(
+    def test_should_is_valid_true_when_is_greater_than_is_called_with_value_greater_than_comparer(
             self):
         value = datetime.now()
         comparer = datetime.now() - timedelta(days=1)
