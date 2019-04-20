@@ -32,3 +32,6 @@ class Notifiable(ABC):
 
     def add_notifications(self, *notifications):
         self._notifications += notifications
+
+    def add_notifications_from_notifiable(self, notifiable):
+        self._notifications += notifiable.notifications
