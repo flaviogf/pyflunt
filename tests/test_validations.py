@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime
 
 from pyflunt.validations import Contract
 
@@ -135,5 +136,33 @@ class IsLowerThanOrEqualsMixinTests(unittest.TestCase):
                                                                  comparer=10,
                                                                  field='initial value',
                                                                  message='initial value invalid')
+
+        self.assertTrue(contract.is_valid)
+
+
+class IsBetweenMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_between_is_called_with_value_is_not_in_range_of_to(self):
+        begin_date = datetime(year=2019, month=1, day=1)
+        end_data = datetime(year=2019, month=1, day=30)
+        today = datetime(year=2019, month=2, day=1)
+
+        contract = Contract().requires().is_between(value=today,
+                                                    of=begin_date,
+                                                    to=end_data,
+                                                    field="birthday",
+                                                    message='birthday invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_between_is_called_with_value_in_range_of_to(self):
+        begin_date = datetime(year=2019, month=1, day=1)
+        end_date = datetime(year=2019, month=1, day=30)
+        today = datetime(year=2019, month=1, day=15)
+
+        contract = Contract().requires().is_between(value=today,
+                                                    of=begin_date,
+                                                    to=end_date,
+                                                    field='birthday',
+                                                    message='birthday invalid')
 
         self.assertTrue(contract.is_valid)
