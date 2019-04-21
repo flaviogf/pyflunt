@@ -85,3 +85,29 @@ class IsGreaterOrEqualsThanMixinTests(unittest.TestCase):
                                                                    message='initial value invalid')
 
         self.assertTrue(contract.is_valid)
+
+
+class IsLowerThanMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_lower_than_is_called_with_value_greater_than_comparer(self):
+        contract = Contract().requires().is_lower_than(value=100.99,
+                                                       comparer=100.98,
+                                                       field='initial value',
+                                                       message='initial value invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_lower_than_is_called_with_value_equal_to_comparer(self):
+        contract = Contract().requires().is_lower_than(value=100,
+                                                       comparer=100,
+                                                       field='initial value',
+                                                       message='initial value invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_lower_than_is_called_with_value_lower_than_comparer(self):
+        contract = Contract().requires().is_lower_than(value=10,
+                                                       comparer=100,
+                                                       field='initial value',
+                                                       message='initial value invalid')
+
+        self.assertTrue(contract.is_valid)
