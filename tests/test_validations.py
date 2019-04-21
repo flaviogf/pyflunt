@@ -230,8 +230,24 @@ class IsEmptyMixinTests(unittest.TestCase):
         self.assertFalse(contract.is_valid)
 
     def test_should_is_valid_true_when_is_empty_is_called_with_value_is_empty(self):
-        contract = Contract().requires().is_empty(value="",
+        contract = Contract().requires().is_empty(value='',
                                                   field='id',
                                                   message='id invalid')
+
+        self.assertTrue(contract.is_valid)
+
+
+class IsNotEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_not_empty_is_called_with_value_is_empty(self):
+        contract = Contract().requires().is_not_empty(value='',
+                                                      field='id',
+                                                      message='id invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_not_empty_is_called_with_value_is_not_empty(self):
+        contract = Contract().requires().is_not_empty(value=uuid.uuid4(),
+                                                      field='id',
+                                                      message='id invalid')
 
         self.assertTrue(contract.is_valid)
