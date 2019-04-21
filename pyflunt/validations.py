@@ -38,6 +38,14 @@ class IsLowerThanMixin:
         return self
 
 
+class IsLowerOrEqualsMixin:
+    def is_lower_or_equals_than(self, value, comparer, field, message):
+        if value > comparer:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -48,6 +56,7 @@ class Contract(IsFalseMixin,
                IsGreaterThanMixin,
                IsGreaterThanOrEqualsMixin,
                IsLowerThanMixin,
+               IsLowerOrEqualsMixin,
                RequiresMixin,
                Notifiable):
     pass
