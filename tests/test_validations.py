@@ -182,3 +182,21 @@ class IsNoneMixinTests(unittest.TestCase):
                                                  message='anything')
 
         self.assertTrue(contract.is_valid)
+
+
+class AreEqualsMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_are_equals_is_called_with_value_is_not_equal_comparer(self):
+        contract = Contract().requires().are_equals(value=10,
+                                                    comparer=100,
+                                                    field='wallet',
+                                                    message='wallet invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_are_equals_is_called_with_value_is_equal_comparer(self):
+        contract = Contract().requires().are_equals(value=100,
+                                                    comparer=100,
+                                                    field='wallet',
+                                                    message='wallet invalid')
+
+        self.assertTrue(contract.is_valid)

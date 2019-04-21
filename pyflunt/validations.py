@@ -62,6 +62,14 @@ class IsNoneMixin:
         return self
 
 
+class AreEqualsMixin:
+    def are_equals(self, value, comparer, field, message):
+        if value != comparer:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -75,6 +83,7 @@ class Contract(IsFalseMixin,
                IsLowerOrEqualsMixin,
                IsBetweenMixin,
                IsNoneMixin,
+               AreEqualsMixin,
                RequiresMixin,
                Notifiable):
     pass
