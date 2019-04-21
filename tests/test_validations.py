@@ -44,10 +44,44 @@ class IsGreaterThanMixinTests(unittest.TestCase):
 
         self.assertFalse(contract.is_valid)
 
+    def test_should_is_valid_false_when_is_greater_than_is_called_with_value_equal_than_comparer(self):
+        contract = Contract().requires().is_greater_than(value=100.99,
+                                                         comparer=100.99,
+                                                         field='initial value',
+                                                         message='initial value invalid')
+
+        self.assertFalse(contract.is_valid)
+
     def test_should_is_valid_true_when_is_greater_than_is_called_with_value_greater_than_comparer(self):
         contract = Contract().requires().is_greater_than(value=100.99,
                                                          comparer=100.89,
                                                          field='initial value',
                                                          message='initial value invalid')
+
+        self.assertTrue(contract.is_valid)
+
+
+class IsGreaterOrEqualsThanMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_greater_than_or_equals_is_called_with_value_lower_than_comparer(self):
+        contract = Contract().requires().is_greater_than_or_equals(value=10,
+                                                                   comparer=100.99,
+                                                                   field='initial value',
+                                                                   message='initial value invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_greater_than_or_equals_is_called_with_value_equal_than_comparer(self):
+        contract = Contract().requires().is_greater_than_or_equals(value=100.99,
+                                                                   comparer=100.99,
+                                                                   field='initial value',
+                                                                   message='initial value invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_greater_than_or_equals_is_called_with_value_greater_than_comparer(self):
+        contract = Contract().requires().is_greater_than_or_equals(value=100.99,
+                                                                   comparer=100.99,
+                                                                   field='initial value',
+                                                                   message='initial value invalid')
 
         self.assertTrue(contract.is_valid)
