@@ -22,8 +22,8 @@ class IsGreaterThanMixin:
         return self
 
 
-class IsGreaterThanOrEqualsMixin:
-    def is_greater_than_or_equals(self, value, comparer, field, message):
+class IsGreaterOrEqualsMixin:
+    def is_greater_or_equals_than(self, value, comparer, field, message):
         if value < comparer:
             self.add_notification(Notification(field, message))
 
@@ -54,7 +54,7 @@ class RequiresMixin:
 class Contract(IsFalseMixin,
                IsTrueMixin,
                IsGreaterThanMixin,
-               IsGreaterThanOrEqualsMixin,
+               IsGreaterOrEqualsMixin,
                IsLowerThanMixin,
                IsLowerOrEqualsMixin,
                RequiresMixin,
