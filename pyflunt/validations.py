@@ -11,7 +11,10 @@ class IsFalseMixin:
 
 class IsTrueMixin:
     def is_true(self, value, field, message):
-        return self.is_false(not value, field, message)
+        if not value:
+            self.add_notification(Notification(field, message))
+
+        return self
 
 
 class IsGreaterThanMixin:
@@ -78,6 +81,14 @@ class AreNotEqualsMixin:
         return self
 
 
+class IsEmptyMixin:
+    def is_empty(self, value, field, message):
+        if str(value):
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -93,6 +104,7 @@ class Contract(IsFalseMixin,
                IsNoneMixin,
                AreEqualsMixin,
                AreNotEqualsMixin,
+               IsEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass
