@@ -89,6 +89,14 @@ class IsEmptyMixin:
         return self
 
 
+class IsNotEmptyMixin:
+    def is_not_empty(self, value, field, message):
+        if not str(value):
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -105,6 +113,7 @@ class Contract(IsFalseMixin,
                AreEqualsMixin,
                AreNotEqualsMixin,
                IsEmptyMixin,
+               IsNotEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass
