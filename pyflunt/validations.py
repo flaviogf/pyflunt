@@ -1,37 +1,22 @@
-from datetime import datetime
-from decimal import Decimal
-from typing import Union
-
-from pyflunt.notifications import Notification
+from pyflunt.notifications import Notifiable, Notification
 
 
-class BoolValidationContractMixin:
-    def is_false(self, value: 'bool', field: 'str',
-                 message: 'str') -> '__class__':
+class IsFalseMixin:
+    def is_false(self, value, field, message):
         if value:
             self.add_notification(Notification(field, message))
 
         return self
 
-    def is_true(self, value: 'bool', field: 'str',
-                message: 'str') -> '__class__':
+
+class IsTrueMixin:
+    def is_true(self, value, field, message):
         return self.is_false(not value, field, message)
 
 
-class DateTimeValidationContractMixin:
-    def is_greater_than(self, value: 'datetime', comparer: 'datetime',
-                        field: 'str', message: 'str') -> '__class__':
-        if value < comparer:
-            self.add_notification(Notification(field, message))
-
-        return self
-
-
-class NumberValidationContractMixin:
-    def is_greater_than(self, value: 'Union[int, float, complex, Decimal]',
-                        comparer: 'Union[int, float, complex, Decimal]',
-                        field: 'str', message: 'str') -> '__class__':
-        if value < comparer:
+class IsGreaterThan:
+    def is_greater_than(self, value, comparer, field, message):
+        if value <= comparer:
             self.add_notification(Notification(field, message))
 
         return self
@@ -40,3 +25,11 @@ class NumberValidationContractMixin:
 class RequiresMixin:
     def requires(self):
         return self
+
+
+class Contract(IsFalseMixin,
+               IsTrueMixin,
+               IsGreaterThan,
+               RequiresMixin,
+               Notifiable):
+    pass
