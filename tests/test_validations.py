@@ -166,3 +166,19 @@ class IsBetweenMixinTests(unittest.TestCase):
                                                     message='birthday invalid')
 
         self.assertTrue(contract.is_valid)
+
+
+class IsNoneMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_none_is_called_with_value_not_none(self):
+        contract = Contract().requires().is_none(value='anything',
+                                                 field='name',
+                                                 message='name invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_none_is_called_with_value_none(self):
+        contract = Contract().requires().is_none(value=None,
+                                                 field='anything',
+                                                 message='anything')
+
+        self.assertTrue(contract.is_valid)

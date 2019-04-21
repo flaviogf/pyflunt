@@ -54,6 +54,14 @@ class IsBetweenMixin:
         return self
 
 
+class IsNoneMixin:
+    def is_none(self, value, field, message):
+        if value is not None:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -66,6 +74,7 @@ class Contract(IsFalseMixin,
                IsLowerThanMixin,
                IsLowerOrEqualsMixin,
                IsBetweenMixin,
+               IsNoneMixin,
                RequiresMixin,
                Notifiable):
     pass
