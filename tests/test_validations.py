@@ -1,4 +1,5 @@
 import unittest
+import uuid
 from datetime import datetime
 
 from pyflunt.validations import Contract
@@ -216,5 +217,21 @@ class AreNotEqualsMixin(unittest.TestCase):
                                                         comparer=10,
                                                         field='wallet',
                                                         message='wallet invalid')
+
+        self.assertTrue(contract.is_valid)
+
+
+class IsEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_false_when_is_empty_is_called_with_value_is_not_empty(self):
+        contract = Contract().requires().is_empty(value=uuid.uuid4(),
+                                                  field='id',
+                                                  message='id invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_empty_is_called_with_value_is_empty(self):
+        contract = Contract().requires().is_empty(value="",
+                                                  field='id',
+                                                  message='id invalid')
 
         self.assertTrue(contract.is_valid)
