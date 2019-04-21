@@ -31,10 +31,10 @@ class Notifiable(ABC):
         self._notifications.append(notification)
 
     def add_notifications(self, *notifications):
-        self._notifications += self._filter_and_map_notifiables_in_notifications(notifications)
+        self._notifications += self._filter_and_map_notifiables(notifications)
         self._notifications += self._filter_notifications(notifications)
 
-    def _filter_and_map_notifiables_in_notifications(self, notifications):
+    def _filter_and_map_notifiables(self, notifications):
         return [notification for notifiable in notifications
                 if isinstance(notifiable, Notifiable)
                 for notification in notifiable.notifications]
