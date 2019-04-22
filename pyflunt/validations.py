@@ -97,6 +97,14 @@ class IsNotEmptyMixin:
         return self
 
 
+class HasMinLenMixin:
+    def has_min_len(self, value, minimum, field, message):
+        if value is None or len(value) < minimum:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -114,6 +122,7 @@ class Contract(IsFalseMixin,
                AreNotEqualsMixin,
                IsEmptyMixin,
                IsNotEmptyMixin,
+               HasMinLenMixin,
                RequiresMixin,
                Notifiable):
     pass

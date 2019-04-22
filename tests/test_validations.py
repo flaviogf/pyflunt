@@ -251,3 +251,29 @@ class IsNotEmptyMixinTests(unittest.TestCase):
                                                       message='id invalid')
 
         self.assertTrue(contract.is_valid)
+
+
+class HasMinLenMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_has_min_len_is_called_with_value_contains_minimum_len(self):
+        contract = Contract().requires().has_min_len(value='Steve',
+                                                     minimum=5,
+                                                     field='name',
+                                                     message='name invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_has_min_len_is_called_with_value_is_none(self):
+        contract = Contract().requires().has_min_len(value=None,
+                                                     minimum=5,
+                                                     field='name',
+                                                     message='name invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_false_when_has_min_len_is_called_with_value_dont_contains_minimum_len(self):
+        contract = Contract().requires().has_min_len(value='Steve',
+                                                     minimum=6,
+                                                     field='name',
+                                                     message='name invalid')
+
+        self.assertFalse(contract.is_valid)
