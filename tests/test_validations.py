@@ -303,3 +303,29 @@ class HasMaxLenMixin(unittest.TestCase):
                                                      message='name invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class HasLenMixin(unittest.TestCase):
+    def test_should_is_valid_true_when_has_len_is_called_with_value_has_same_than_length(self):
+        contract = Contract().requires().has_len(value='Steve',
+                                                 length=5,
+                                                 field='name',
+                                                 message='name invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_has_len_is_called_with_value_none(self):
+        contract = Contract().requires().has_len(value=None,
+                                                 length=5,
+                                                 field='name',
+                                                 message='name invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_false_when_has_len_is_called_with_value_different_than_len(self):
+        contract = Contract().requires().has_len(value=None,
+                                                 length=5,
+                                                 field='name',
+                                                 message='name invalid')
+
+        self.assertFalse(contract.is_valid)
