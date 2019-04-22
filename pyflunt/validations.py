@@ -105,6 +105,14 @@ class HasMinLenMixin:
         return self
 
 
+class HasMaxLenMixin:
+    def has_max_len(self, value, maximum, field, message):
+        if value is None or len(value) > maximum:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -123,6 +131,7 @@ class Contract(IsFalseMixin,
                IsEmptyMixin,
                IsNotEmptyMixin,
                HasMinLenMixin,
+               HasMaxLenMixin,
                RequiresMixin,
                Notifiable):
     pass
