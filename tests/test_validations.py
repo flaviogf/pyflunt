@@ -347,3 +347,19 @@ class ContainsMixinTests(unittest.TestCase):
                                                   message='name invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsEmailMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_is_email_is_called_with_a_valid_email(self):
+        contract = Contract().requires().is_email(value='parker_spiderman2001@gmail.com.br',
+                                                  field='email',
+                                                  message='email invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_email_is_called_with_a_invalid_email(self):
+        contract = Contract().requires().is_email(value='parker_spiderman2001@gmail',
+                                                  field='email',
+                                                  message='email invalid')
+
+        self.assertFalse(contract.is_valid)
