@@ -167,6 +167,14 @@ class IsUrlOrEmptyMixin:
         return self
 
 
+class MatchMixin:
+    def match(self, value, pattern, field, message):
+        if not re.match(pattern, value, re.IGNORECASE):
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 def _valid_email(value):
     return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE)
 
@@ -201,6 +209,7 @@ class Contract(IsFalseMixin,
                IsEmailOrEmptyMixin,
                IsUrlMixin,
                IsUrlOrEmptyMixin,
+               MatchMixin,
                RequiresMixin,
                Notifiable):
     pass

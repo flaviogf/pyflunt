@@ -425,3 +425,21 @@ class IsUrlOrEmptyMixin(unittest.TestCase):
                                                          message='site invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class MatchMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_match_is_called_with_value_match_pattern(self):
+        contract = Contract().requires().match(value='Tony Stark',
+                                               pattern=r".*(stark).*",
+                                               field='name',
+                                               message='invalid name')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_match_is_called_with_value_doesnt_match(self):
+        contract = Contract().requires().match(value='Tony Stark',
+                                               pattern=r".*(steve).*",
+                                               field='name',
+                                               message='invalid name')
+
+        self.assertFalse(contract.is_valid)
