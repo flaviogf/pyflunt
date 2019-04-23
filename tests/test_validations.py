@@ -329,3 +329,21 @@ class HasLenMixin(unittest.TestCase):
                                                  message='name invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class ContainsMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_contains_is_called_with_value_in_text(self):
+        contract = Contract().requires().contains(value='eve',
+                                                  text='Steve',
+                                                  field='name',
+                                                  message='name invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_contains_is_called_with_value_not_in_text(self):
+        contract = Contract().requires().contains(value='Stark',
+                                                  text='Steve',
+                                                  field='name',
+                                                  message='name invalid')
+
+        self.assertFalse(contract.is_valid)
