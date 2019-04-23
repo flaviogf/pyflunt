@@ -443,3 +443,19 @@ class MatchMixinTests(unittest.TestCase):
                                                message='invalid name')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsDigitMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_is_digit_is_called_with_digit_text(self):
+        contract = Contract().requires().is_digit(value='2020',
+                                                  field='year',
+                                                  message='year invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_digit_is_called_with_non_digit_text(self):
+        contract = Contract().requires().is_digit(value='Text',
+                                                  field='year',
+                                                  message='year invalid')
+
+        self.assertFalse(contract.is_valid)
