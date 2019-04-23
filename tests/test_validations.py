@@ -363,3 +363,26 @@ class IsEmailMixinTests(unittest.TestCase):
                                                   message='email invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsEmailOrEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_is_email_or_empty_is_called_with_empty_value(self):
+        contract = Contract().requires().is_email_or_empty(value='',
+                                                           field='email',
+                                                           message='email invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_email_or_empty_is_called_with_valid_email(self):
+        contract = Contract().requires().is_email_or_empty(value='parker_spiderman2001@gmail.com.br',
+                                                           field='email',
+                                                           message='email invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_email_or_empty_is_called_with_invalid_email(self):
+        contract = Contract().requires().is_email_or_empty(value='parker_spiderman2001@gmail',
+                                                           field='email',
+                                                           message='email invalid')
+
+        self.assertFalse(contract.is_valid)

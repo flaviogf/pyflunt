@@ -133,10 +133,24 @@ class ContainsMixin:
 
 class IsEmailMixin:
     def is_email(self, value, field, message):
-        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE):
+        if not _valid_email(value):
             self.add_notification(Notification(field, message))
 
         return self
+
+
+class IsEmailOrEmptyMixin:
+    def is_email_or_empty(self, value, field, message):
+        if not str(value) or _valid_email(value):
+            return self
+
+        self.add_notification(Notification(field, message))
+
+        return self
+
+
+def _valid_email(value):
+    return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE)
 
 
 class RequiresMixin:
@@ -161,6 +175,7 @@ class Contract(IsFalseMixin,
                HasLenMixin,
                ContainsMixin,
                IsEmailMixin,
+               IsEmailOrEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass
