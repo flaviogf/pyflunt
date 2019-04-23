@@ -1,3 +1,5 @@
+import re
+
 from pyflunt.notifications import Notifiable, Notification
 
 
@@ -129,6 +131,14 @@ class ContainsMixin:
         return self
 
 
+class IsEmailMixin:
+    def is_email(self, value, field, message):
+        if not re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE):
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -150,6 +160,7 @@ class Contract(IsFalseMixin,
                HasMaxLenMixin,
                HasLenMixin,
                ContainsMixin,
+               IsEmailMixin,
                RequiresMixin,
                Notifiable):
     pass
