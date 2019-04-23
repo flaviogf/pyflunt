@@ -121,6 +121,14 @@ class HasLenMixin:
         return self
 
 
+class ContainsMixin:
+    def contains(self, value, text, field, message):
+        if value not in text:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 class RequiresMixin:
     def requires(self):
         return self
@@ -141,6 +149,7 @@ class Contract(IsFalseMixin,
                HasMinLenMixin,
                HasMaxLenMixin,
                HasLenMixin,
+               ContainsMixin,
                RequiresMixin,
                Notifiable):
     pass
