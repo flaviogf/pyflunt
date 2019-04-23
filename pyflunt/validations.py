@@ -175,6 +175,14 @@ class MatchMixin:
         return self
 
 
+class IsDigitMixin:
+    def is_digit(self, value, field, message):
+        if not value.isdigit():
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 def _valid_email(value):
     return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE)
 
@@ -210,6 +218,7 @@ class Contract(IsFalseMixin,
                IsUrlMixin,
                IsUrlOrEmptyMixin,
                MatchMixin,
+               IsDigitMixin,
                RequiresMixin,
                Notifiable):
     pass
