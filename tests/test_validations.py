@@ -402,3 +402,26 @@ class IsUrlMixinTests(unittest.TestCase):
                                                 message='site invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsUrlOrEmptyMixin(unittest.TestCase):
+    def test_should_is_valid_true_when_is_url_or_empty_is_called_with_empty_value(self):
+        contract = Contract().requires().is_url_or_empty(value='',
+                                                         field='site',
+                                                         message='site invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_is_url_or_empty_is_called_with_valid_url(self):
+        contract = Contract().requires().is_url_or_empty(value='https://www.google.com',
+                                                         field='site',
+                                                         message='site invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_url_or_empty_is_called_with_invalid_url(self):
+        contract = Contract().requires().is_url_or_empty(value='invalid url',
+                                                         field='site',
+                                                         message='site invalid')
+
+        self.assertFalse(contract.is_valid)
