@@ -627,7 +627,7 @@ class HasExactLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
 
         self.assertTrue(contract.is_valid)
 
-    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_doesnt_exact_length(
+    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_does_not_exact_length(
             self):
         contract = Contract().requires().has_exact_length_if_not_none_or_empty(value='Steve Rogers',
                                                                                length=5,
