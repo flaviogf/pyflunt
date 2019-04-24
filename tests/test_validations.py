@@ -482,3 +482,26 @@ class IsNotNoneOrEmptyMixinTests(unittest.TestCase):
                                                               message='name invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsNotNoneOrWhiteSpaceTest(unittest.TestCase):
+    def test_should_is_valid_true_when_is_not_none_or_white_space_is_called_with_value_not_none_or_white_space(self):
+        contract = Contract().requires().is_not_none_or_white_space(value='Anything',
+                                                                    field='name',
+                                                                    message='name invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_not_none_or_white_space_is_called_with_value_white_space(self):
+        contract = Contract().requires().is_not_none_or_white_space(value='   ',
+                                                                    field='name',
+                                                                    message='name invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_not_none_or_white_space_is_called_with_value_none(self):
+        contract = Contract().requires().is_not_none_or_white_space(value=None,
+                                                                    field='name',
+                                                                    message='name invalid')
+
+        self.assertFalse(contract.is_valid)
