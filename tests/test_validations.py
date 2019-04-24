@@ -459,3 +459,26 @@ class IsDigitMixinTests(unittest.TestCase):
                                                   message='year invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class IsNotNoneOrEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_is_not_none_or_empty_is_called_with_value_is_not_none_or_empty(self):
+        contract = Contract().requires().is_not_none_or_empty(value='Anything',
+                                                              field='name',
+                                                              message='name invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_not_none_or_empty_is_called_with_value_none(self):
+        contract = Contract().requires().is_not_none_or_empty(value=None,
+                                                              field='name',
+                                                              message='name invalid')
+
+        self.assertFalse(contract.is_valid)
+
+    def test_should_is_valid_false_when_is_not_none_or_empty_is_called_with_value_empty(self):
+        contract = Contract().requires().is_not_none_or_empty(value="",
+                                                              field='name',
+                                                              message='name invalid')
+
+        self.assertFalse(contract.is_valid)

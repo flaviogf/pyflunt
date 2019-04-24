@@ -85,7 +85,7 @@ class AreNotEqualsMixin:
 
 class IsEmptyMixin:
     def is_empty(self, value, field, message):
-        if str(value):
+        if value:
             self.add_notification(Notification(field, message))
 
         return self
@@ -93,7 +93,7 @@ class IsEmptyMixin:
 
 class IsNotEmptyMixin:
     def is_not_empty(self, value, field, message):
-        if not str(value):
+        if not value:
             self.add_notification(Notification(field, message))
 
         return self
@@ -101,7 +101,7 @@ class IsNotEmptyMixin:
 
 class HasMinLenMixin:
     def has_min_len(self, value, minimum, field, message):
-        if value is None or len(value) < minimum:
+        if not value or len(value) < minimum:
             self.add_notification(Notification(field, message))
 
         return self
@@ -109,7 +109,7 @@ class HasMinLenMixin:
 
 class HasMaxLenMixin:
     def has_max_len(self, value, maximum, field, message):
-        if value is None or len(value) > maximum:
+        if not value or len(value) > maximum:
             self.add_notification(Notification(field, message))
 
         return self
@@ -117,7 +117,7 @@ class HasMaxLenMixin:
 
 class HasLenMixin:
     def has_len(self, value, length, field, message):
-        if value is None or len(value) != length:
+        if not value or len(value) != length:
             self.add_notification(Notification(field, message))
 
         return self
@@ -141,7 +141,7 @@ class IsEmailMixin:
 
 class IsEmailOrEmptyMixin:
     def is_email_or_empty(self, value, field, message):
-        if not str(value) or _valid_email(value):
+        if not value or _valid_email(value):
             return self
 
         self.add_notification(Notification(field, message))
@@ -159,7 +159,7 @@ class IsUrlMixin:
 
 class IsUrlOrEmptyMixin:
     def is_url_or_empty(self, value, field, message):
-        if not str(value) or _valid_url(value):
+        if not value or _valid_url(value):
             return self
 
         self.add_notification(Notification(field, message))
@@ -178,6 +178,14 @@ class MatchMixin:
 class IsDigitMixin:
     def is_digit(self, value, field, message):
         if not value.isdigit():
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
+class IsNotNoneOrEmptyMixin:
+    def is_not_none_or_empty(self, value, field, message):
+        if not value:
             self.add_notification(Notification(field, message))
 
         return self
@@ -219,6 +227,7 @@ class Contract(IsFalseMixin,
                IsUrlOrEmptyMixin,
                MatchMixin,
                IsDigitMixin,
+               IsNotNoneOrEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass
