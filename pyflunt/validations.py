@@ -223,6 +223,14 @@ class HasMaxLengthIfNotNoneOrEmptyMixin:
         return self
 
 
+class HasExactLengthIfNotNoneOrEmptyMixin:
+    def has_exact_length_if_not_none_or_empty(self, value, length, field, message):
+        if value and len(value) != length:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 def _valid_email(value):
     return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE)
 
@@ -264,6 +272,7 @@ class Contract(IsFalseMixin,
                IsNoneOrEmptyMixin,
                HasMinLengthIfNotNoneOrEmptyMixin,
                HasMaxLengthIfNotNoneOrEmptyMixin,
+               HasExactLengthIfNotNoneOrEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass

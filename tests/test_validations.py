@@ -599,3 +599,39 @@ class HasMaxLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
                                                                              message='contact invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class HasExactLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_none(self):
+        contract = Contract().requires().has_exact_length_if_not_none_or_empty(value=None,
+                                                                               length=10,
+                                                                               field='contact',
+                                                                               message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_empty(self):
+        contract = Contract().requires().has_exact_length_if_not_none_or_empty(value='',
+                                                                               length=10,
+                                                                               field='contact',
+                                                                               message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_has_exact_length(
+            self):
+        contract = Contract().requires().has_exact_length_if_not_none_or_empty(value='Steve',
+                                                                               length=5,
+                                                                               field='contact',
+                                                                               message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_exact_length_if_not_none_or_empty_is_called_with_value_doesnt_exact_length(
+            self):
+        contract = Contract().requires().has_exact_length_if_not_none_or_empty(value='Steve Rogers',
+                                                                               length=5,
+                                                                               field='contact',
+                                                                               message='contact invalid')
+
+        self.assertFalse(contract.is_valid)
