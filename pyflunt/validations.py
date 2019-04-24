@@ -199,6 +199,14 @@ class IsNotNoneOrWhiteSpaceMixin:
         return self
 
 
+class IsNoneOrEmptyMixin:
+    def is_none_or_empty(self, value, field, message):
+        if value:
+            self.add_notification(Notification(field, message))
+
+        return self
+
+
 def _valid_email(value):
     return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", value, re.IGNORECASE)
 
@@ -237,6 +245,7 @@ class Contract(IsFalseMixin,
                IsDigitMixin,
                IsNotNoneOrEmptyMixin,
                IsNotNoneOrWhiteSpaceMixin,
+               IsNoneOrEmptyMixin,
                RequiresMixin,
                Notifiable):
     pass
