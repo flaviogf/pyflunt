@@ -528,3 +528,39 @@ class IsNoneOrEmptyMixinTest(unittest.TestCase):
                                                           message='contact invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class HasMinLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_has_min_length_if_not_none_or_empty_is_called_with_value_none(self):
+        contract = Contract().requires().has_min_length_if_not_none_or_empty(value=None,
+                                                                             minimum=1,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_min_length_if_not_none_or_empty_is_called_with_value_empty(self):
+        contract = Contract().requires().has_min_length_if_not_none_or_empty(value='',
+                                                                             minimum=1,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_min_length_if_not_none_or_empty_is_called_with_value_contains_minimum_length(
+            self):
+        contract = Contract().requires().has_min_length_if_not_none_or_empty(value='Steve',
+                                                                             field='contact',
+                                                                             minimum=5,
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_false_when_has_min_length_if_not_none_or_empty_is_called_with_value_doesnt_contains_minimum_length(
+            self):
+        contract = Contract().requires().has_min_length_if_not_none_or_empty(value='Steve',
+                                                                             field='contact',
+                                                                             minimum=6,
+                                                                             message='contact invalid')
+
+        self.assertFalse(contract.is_valid)
