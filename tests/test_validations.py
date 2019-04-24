@@ -564,3 +564,38 @@ class HasMinLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
                                                                              message='contact invalid')
 
         self.assertFalse(contract.is_valid)
+
+
+class HasMaxLengthIfNotNoneOrEmptyMixinTests(unittest.TestCase):
+    def test_should_is_valid_true_when_has_max_length_if_not_none_or_empty_is_called_with_value_none(self):
+        contract = Contract().requires().has_max_length_if_not_none_or_empty(value=None,
+                                                                             maximum=10,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_max_length_if_not_none_or_empty_is_called_with_value_empty(self):
+        contract = Contract().requires().has_max_length_if_not_none_or_empty(value='',
+                                                                             maximum=10,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_max_length_if_not_none_or_empty_is_called_with_value_contains_maximum_length(
+            self):
+        contract = Contract().requires().has_max_length_if_not_none_or_empty(value='Steve',
+                                                                             maximum=5,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertTrue(contract.is_valid)
+
+    def test_should_is_valid_true_when_has_max_length_if_not_none_or_empty_is_called_with_value_exceed_maximum(self):
+        contract = Contract().requires().has_max_length_if_not_none_or_empty(value='Steve',
+                                                                             maximum=4,
+                                                                             field='contact',
+                                                                             message='contact invalid')
+
+        self.assertFalse(contract.is_valid)
